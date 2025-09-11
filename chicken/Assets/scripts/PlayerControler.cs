@@ -16,7 +16,7 @@ public class PlayerControler : MonoBehaviour
     public float xSensitivity = 0.2f;
     public float camRotationLimit = -90;
     public float ySensitivity = 0.2f;
-    public float cameraYMaxMin = 60;
+    public float cameraYMaxMin = 90;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
