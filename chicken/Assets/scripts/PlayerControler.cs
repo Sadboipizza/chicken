@@ -45,7 +45,7 @@ public class PlayerControler : MonoBehaviour
     void Update()
     {
 
-        if (health >= 0)
+        if (health <= 0)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
