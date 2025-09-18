@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayerControler : MonoBehaviour
   
 {
+    public GameObject Boolet_; 
 
     Ray jumpRay;
     
@@ -109,5 +110,15 @@ public class PlayerControler : MonoBehaviour
         {
             health -= 1;
         }
+
+        if(collision.gameObject.tag == "Enemy")
+        {
+            health -= 1;
+        }
+    }
+
+    public void attack(InputAction.CallbackContext context)
+    {
+      
     }
 }

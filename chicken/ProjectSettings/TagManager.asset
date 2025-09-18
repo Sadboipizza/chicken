@@ -8,6 +8,7 @@ TagManager:
   - Killzone
   - health
   - Hazard
+  - Boolet
   layers:
   - Default
   - TransparentFX
