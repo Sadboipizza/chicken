@@ -1,8 +1,7 @@
-using Unity.Cinemachine;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.SceneManagement;
+
 
 public class BaEnemy : MonoBehaviour
 {
@@ -10,6 +9,8 @@ public class BaEnemy : MonoBehaviour
     NavMeshAgent agent;
 
     public int health = 5;
+
+
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,7 +28,7 @@ public class BaEnemy : MonoBehaviour
         {
           Destroy(gameObject);
         }
-
+  
     }
     private void OnTriggerEnter(Collider other)
     {

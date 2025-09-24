@@ -9,6 +9,9 @@ TagManager:
   - health
   - Hazard
   - Boolet
+  - Enemy2
+  - Infihealth
+  - weapon
   layers:
   - Default
   - TransparentFX

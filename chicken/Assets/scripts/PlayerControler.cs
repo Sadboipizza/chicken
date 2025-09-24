@@ -1,20 +1,21 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 
+
 public class PlayerControler : MonoBehaviour
-  
+
 {
-    public GameObject Boolet_; 
+
 
     Ray jumpRay;
-    
-     public float jumpDistatnce = 1.1f;
-     public float jumpHieght = 10f;
 
-    Vector3 camereaOffset =  new Vector3 (0, 1, 0);
+    public float jumpDistatnce = 1.1f;
+    public float jumpHieght = 10f;
+
+    Vector3 camereaOffset = new Vector3(0, 1, 0);
     private Rigidbody rb;
     float inputX;
     float inputY;
@@ -23,41 +24,77 @@ public class PlayerControler : MonoBehaviour
     InputAction lookAxis;
     Vector2 cameraRotation = new Vector2(-10, 0);
 
-    public int health = 5;
-    public int maxhealth = 5;
-   
+    public int health = 100;
+    public int maxhealth = 100;
+
+    Ray interact;
+    RaycastHit interactHit;
+    GameObject pickUpObject;
+    public PlayerInput input;
+    public Transform weaponSlot;
+    public Weapon currentWeapon;
+    public float interactDistance = 3f;
+    public bool attacking = false;
+
 
     public float cameraYMaxMin = 90;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        input = GetComponent<PlayerInput>();
+        jumpRay = new Ray(transform.position, -transform.up);
+        interact = new Ray(transform.position, transform.forward);
+
+
+
+        rb = GetComponent<Rigidbody>();
+        lookAxis = GetComponent<PlayerInput>().currentActionMap.FindAction("look");
+        playerCam = Camera.main;
+        weaponSlot = transform.GetChild(0);
+
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-       
-        rb = GetComponent<Rigidbody>();
-        playerCam = Camera.main;
-        lookAxis = GetComponent<PlayerInput>().currentActionMap.FindAction("look");
 
-        jumpRay = new Ray(transform.position, -transform.up);
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (health <= 0)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-            
+
+
+
+        if (Physics.Raycast(interact, out interactHit, interactDistance))
+        {
+            if (interactHit.collider.tag == "weapon")
+            {
+                pickUpObject = interactHit.collider.gameObject;
+            }
+        }
+        else
+        {
+            pickUpObject = null;
+        }
+
+        if (currentWeapon)
+        {
+            if (currentWeapon.holdToAttack && attacking)
+
+                currentWeapon.fire();
+
+        }
+
 
         Quaternion playerRotaion = Quaternion.identity;
         playerRotaion.y = playerCam.transform.rotation.y;
         playerRotaion.w = playerCam.transform.rotation.w;
-        transform.rotation = playerRotaion;
-       
 
+        transform.rotation = playerRotaion;
         //movement sysyem
         Vector3 tempMove = rb.linearVelocity;
         tempMove.x = inputY * speed;
@@ -68,7 +105,52 @@ public class PlayerControler : MonoBehaviour
 
         jumpRay.origin = transform.position;
         jumpRay.direction = -transform.up;
+    }
+    public void Attack(InputAction.CallbackContext context)
+    {
+        if (currentWeapon)
+        {
+            if (currentWeapon.holdToAttack)
+            {
+                if (context.ReadValueAsButton())
+                    attacking = true;
+                else
+                    attacking = false;
+            }
 
+            else if (context.ReadValueAsButton())
+                currentWeapon.fire();
+        }
+    }
+    public void Reload()
+        {
+        if (currentWeapon)
+            if (!currentWeapon.reloading)
+                currentWeapon.reload();
+    }
+
+    public void Interact()
+    {
+        if (pickUpObject)
+        {
+            if (pickUpObject.tag == "weapon")
+            {
+                if (currentWeapon)
+                    DropWeapon();
+
+                pickUpObject.GetComponent<Weapon>().equip(this);
+            }
+            pickUpObject = null;
+        }
+        else
+            Reload();
+    }
+    public void DropWeapon()
+    {
+        if (currentWeapon)
+        {
+            currentWeapon.GetComponent<Weapon>().unequip();
+        }
     }
     public void Move(InputAction.CallbackContext context) 
     {
@@ -95,30 +177,39 @@ public class PlayerControler : MonoBehaviour
         {
             health = 0;
         }
-       
+
         if ((other.tag == "health") && (health < maxhealth))
         {
             health++;
-           
+
             other.gameObject.SetActive(false);
         }
+        if (other.tag == "Infihealth")
+        {
+            health += 9999999;
 
+            other.gameObject.SetActive(false);
+        }
+     
     }
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Hazard")
         {
-            health -= 1;
+            health -= 10;
         }
 
         if(collision.gameObject.tag == "Enemy")
         {
-            health -= 1;
+            health -= 10;
+
+        }
+
+        if(collision.gameObject.tag == "Enemy2")
+        {
+            health -= 30;
         }
     }
 
-    public void attack(InputAction.CallbackContext context)
-    {
-      
-    }
+
 }
