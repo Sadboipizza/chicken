@@ -27,7 +27,7 @@ public class PlayerControler : MonoBehaviour
     public int health = 100;
     public int maxhealth = 100;
 
-    Ray interact;
+    Ray interactRay;
     RaycastHit interactHit;
     GameObject pickUpObject;
     public PlayerInput input;
@@ -44,12 +44,11 @@ public class PlayerControler : MonoBehaviour
     {
         input = GetComponent<PlayerInput>();
         jumpRay = new Ray(transform.position, -transform.up);
-        interact = new Ray(transform.position, transform.forward);
+        interactRay = new Ray(transform.position, transform.forward);
 
 
 
         rb = GetComponent<Rigidbody>();
-        lookAxis = GetComponent<PlayerInput>().currentActionMap.FindAction("look");
         playerCam = Camera.main;
         weaponSlot = transform.GetChild(0);
 
@@ -69,9 +68,9 @@ public class PlayerControler : MonoBehaviour
 
 
 
-        if (Physics.Raycast(interact, out interactHit, interactDistance))
+        if (Physics.Raycast(interactRay, out interactHit, interactDistance))
         {
-            if (interactHit.collider.tag == "weapon")
+            if (interactHit.collider.tag ==("weapon"))
             {
                 pickUpObject = interactHit.collider.gameObject;
             }
@@ -80,14 +79,11 @@ public class PlayerControler : MonoBehaviour
         {
             pickUpObject = null;
         }
-
         if (currentWeapon)
-        {
-            if (currentWeapon.holdToAttack && attacking)
 
+            if (currentWeapon.holdToAttack && attacking)
                 currentWeapon.fire();
 
-        }
 
 
         Quaternion playerRotaion = Quaternion.identity;
@@ -105,6 +101,9 @@ public class PlayerControler : MonoBehaviour
 
         jumpRay.origin = transform.position;
         jumpRay.direction = -transform.up;
+
+        interactRay.origin = playerCam.transform.position;
+        interactRay.direction = playerCam.transform.forward;
     }
     public void Attack(InputAction.CallbackContext context)
     {
@@ -123,12 +122,11 @@ public class PlayerControler : MonoBehaviour
         }
     }
     public void Reload()
-        {
+    {
         if (currentWeapon)
             if (!currentWeapon.reloading)
                 currentWeapon.reload();
     }
-
     public void Interact()
     {
         if (pickUpObject)

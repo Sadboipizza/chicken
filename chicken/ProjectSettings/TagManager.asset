@@ -12,6 +12,10 @@ TagManager:
   - Enemy2
   - Infihealth
   - weapon
+  - UI_health
+  - UI_Ammo
+  - UI_Clip
+  - Pause
   layers:
   - Default
   - TransparentFX
