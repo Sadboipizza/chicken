@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     TextMeshProUGUI ammoCounter;
     TextMeshProUGUI clip;
-    
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,14 +24,16 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex >= 1)
         {
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControler>();
+
             weaponUI = GameObject.FindGameObjectWithTag("weaponUI");
-       
-            pauseMenu = GameObject.FindGameObjectWithTag("Pause");
+            pauseMenu = GameObject.FindGameObjectWithTag("UI_pause");
+
             pauseMenu.SetActive(false);
 
+            healthBar = GameObject.FindGameObjectWithTag("UI_health").GetComponent<Image>();
             ammoCounter = GameObject.FindGameObjectWithTag("UI_Ammo").GetComponent<TextMeshProUGUI>();
             clip = GameObject.FindGameObjectWithTag("UI_Clip").GetComponent<TextMeshProUGUI>();
-            healthBar = GameObject.FindGameObjectWithTag("UI_health").GetComponent<Image>();
+            
         }
     }
 
@@ -40,6 +43,7 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex >= 1)
         {
             healthBar.fillAmount = (float)player.health / (float)player.maxhealth;
+
             if (player.currentWeapon != null)
             {
                 weaponUI.SetActive(true);

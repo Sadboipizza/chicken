@@ -15,7 +15,12 @@ TagManager:
   - UI_health
   - UI_Ammo
   - UI_Clip
-  - Pause
+  - UI_pause
+  - GameManager
+  - weaponUI
+  - UI_quit
+  - UI_MainMenu
+  - AmmoPack
   layers:
   - Default
   - TransparentFX

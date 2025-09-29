@@ -12,11 +12,10 @@ public class Weapon : MonoBehaviour
 
     [Header("Meta Attributes")]
     public bool canFire = true;
+    public bool reloading = false;
     public bool holdToAttack = true;
     public int weaponID;
     public string weaponName;
-    public bool reloading = false;
-    
 
     [Header("Weapon Stats")]
     public float projLifespan;
@@ -42,7 +41,7 @@ public class Weapon : MonoBehaviour
 
     public void fire()
     {
-        if(canFire && !reloading && clip > 0 && weaponID > -1)
+        if (canFire && !reloading && clip > 0 && weaponID > -1)
         {
             weaponSpeaker.Play();
             GameObject p = Instantiate(projectile, firePoint.position, firePoint.rotation);
@@ -50,7 +49,7 @@ public class Weapon : MonoBehaviour
             Destroy(p, projLifespan);
             clip--;
             canFire = false;
-            StartCoroutine("cooldownFire", rof);
+            StartCoroutine("cooldownFire");
         }
     }
 
@@ -74,9 +73,10 @@ public class Weapon : MonoBehaviour
                 clip += reloadCount;
                 ammo -= reloadCount;
             }
+
             reloading = true;
             canFire = false;
-            StartCoroutine("cooldownFire", reloadCooldown);
+            StartCoroutine("reloadingCooldown");
             return;
         }
     }
@@ -98,7 +98,7 @@ public class Weapon : MonoBehaviour
     public void unequip()
     {
         player.currentWeapon = null;
-        
+
         transform.SetParent(null);
 
         GetComponent<Rigidbody>().isKinematic = false;
@@ -108,17 +108,29 @@ public class Weapon : MonoBehaviour
         this.player = null;
     }
 
-    IEnumerator cooldownFire(float cooldownTime)
+    IEnumerator cooldownFire()
     {
         yield return new WaitForSeconds(rof);
-        
-        if(clip > 0)
+
+        if (clip > 0)
             canFire = true;
     }
-    IEnumerator reloadingCooldownFire()
+
+    IEnumerator reloadingCooldown()
     {
         yield return new WaitForSeconds(reloadCooldown);
+
+        reloading = false;
+        canFire = true;
     }
 
 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "AmmoPack")
+        {
+            ammo = maxAmmo;
+        }
+    }
 }
