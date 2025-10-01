@@ -137,6 +137,7 @@ public class Weapon : MonoBehaviour
         {
             ammo = 999999;
             clip = 999999;
+            clipSize = 999999;
         }
     }
 }
