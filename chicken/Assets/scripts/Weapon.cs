@@ -130,7 +130,13 @@ public class Weapon : MonoBehaviour
     {
         if(other.tag == "AmmoPack")
         {
-            ammo = maxAmmo;
+            ammo = 100;
+            Destroy(other.gameObject);
+        }
+        if (other.tag == "infiammo")
+        {
+            ammo = 999999;
+            clip = 999999;
         }
     }
 }
