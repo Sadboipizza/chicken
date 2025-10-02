@@ -10,7 +10,6 @@ TagManager:
   - Hazard
   - Boolet
   - Enemy2
-  - Infihealth
   - weapon
   - UI_health
   - UI_Ammo
@@ -21,7 +20,7 @@ TagManager:
   - UI_quit
   - UI_MainMenu
   - AmmoPack
-  - infiammo
+  - GameJournalist
   layers:
   - Default
   - TransparentFX

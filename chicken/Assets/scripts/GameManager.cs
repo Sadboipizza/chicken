@@ -51,11 +51,40 @@ public class GameManager : MonoBehaviour
                 ammoCounter.text = "Ammo: " + player.currentWeapon.ammo;
                 clip.text = "Clip: " + player.currentWeapon.clip + " / " + player.currentWeapon.clipSize;
             }
+            else
+                weaponUI.SetActive(false);
         }
     }
-    public void QuitGame()
+    public void Pause()
     {
-        Application.Quit();
+        if (!isPaused)
+        {
+            isPaused = true;
+
+            pauseMenu.SetActive(true);
+
+            Time.timeScale = 0;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+        else
+            Resume();
+    }
+    public void Resume()
+    {
+        if (isPaused)
+        {
+            isPaused = false;
+
+            pauseMenu.SetActive(false);
+
+            Time.timeScale = 1;
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
     public void LoadLevel(int level)
     {
@@ -66,29 +95,8 @@ public class GameManager : MonoBehaviour
     {
         LoadLevel(0);
     }
-    public void Pause()
+    public void QuitGame()
     {
-        if (!isPaused)
-        {
-            isPaused = true;
-            pauseMenu.SetActive(false);
-            Time.timeScale = 0;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else
-            Resume();
+        Application.Quit();
     }
-    public void Resume()
-    {
-            if (isPaused)
-        {
-            isPaused = false;
-            pauseMenu.SetActive(false );
-            Time.timeScale = 1;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-    }
-
 }

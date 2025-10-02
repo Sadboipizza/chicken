@@ -182,11 +182,11 @@ public class PlayerControler : MonoBehaviour
 
             other.gameObject.SetActive(false);
         }
-        if (other.tag == "Infihealth")
+        if (other.tag == "GameJournalist")
         {
             health += 9999999;
 
-            other.gameObject.SetActive(false);
+           
         }
      
     }

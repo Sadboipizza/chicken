@@ -133,7 +133,7 @@ public class Weapon : MonoBehaviour
             ammo = 100;
             Destroy(other.gameObject);
         }
-        if (other.tag == "infiammo")
+        if (other.tag == "GameJournalist")
         {
             ammo = 999999;
             clip = 999999;
