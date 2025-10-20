@@ -1,7 +1,9 @@
+using UnityEditor;
 using UnityEngine;
 
 public class dontknow : MonoBehaviour
 {
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,9 +18,9 @@ public class dontknow : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-       if(other.tag == "Enemy")
+        if (other.tag == "Enemy")
         {
-          
+
             Destroy(gameObject);
         }
     }

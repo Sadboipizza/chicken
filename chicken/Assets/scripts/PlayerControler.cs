@@ -1,4 +1,5 @@
 
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,8 @@ public class PlayerControler : MonoBehaviour
 {
 
 
+
+    GameObject WeaponSlot;
     Ray jumpRay;
 
     public float jumpDistatnce = 1.1f;
@@ -38,6 +41,7 @@ public class PlayerControler : MonoBehaviour
 
 
     public float cameraYMaxMin = 90;
+    private RigidbodyConstraints constraints;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -104,6 +108,8 @@ public class PlayerControler : MonoBehaviour
 
         interactRay.origin = playerCam.transform.position;
         interactRay.direction = playerCam.transform.forward;
+
+     
     }
     public void Attack(InputAction.CallbackContext context)
     {
@@ -178,7 +184,7 @@ public class PlayerControler : MonoBehaviour
 
         if ((other.tag == "health") && (health < maxhealth))
         {
-            health++;
+            health+=20;
 
             other.gameObject.SetActive(false);
         }
@@ -188,7 +194,16 @@ public class PlayerControler : MonoBehaviour
 
            
         }
-     
+        if (other.tag == "GameJournalist")
+        {
+
+            WeaponSlot = GameObject.FindWithTag("WeaponSlot");
+            weaponSlot.AddComponent<Rigidbody>();
+            WeaponSlot.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+
+
+        }
+
     }
     private void OnCollisionEnter(Collision collision)
     {
