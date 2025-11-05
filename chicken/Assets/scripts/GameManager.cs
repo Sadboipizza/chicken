@@ -16,11 +16,13 @@ public class GameManager : MonoBehaviour
 
     TextMeshProUGUI ammoCounter;
     TextMeshProUGUI clip;
+   
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
         if (SceneManager.GetActiveScene().buildIndex >= 1)
         {
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControler>();
@@ -33,7 +35,7 @@ public class GameManager : MonoBehaviour
             healthBar = GameObject.FindGameObjectWithTag("UI_health").GetComponent<Image>();
             ammoCounter = GameObject.FindGameObjectWithTag("UI_Ammo").GetComponent<TextMeshProUGUI>();
             clip = GameObject.FindGameObjectWithTag("UI_Clip").GetComponent<TextMeshProUGUI>();
-            
+
         }
     }
 
@@ -100,3 +102,4 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 }
+

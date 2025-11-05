@@ -23,6 +23,7 @@ TagManager:
   - UI_pause
   - Boolet2
   - WeaponSlot
+  - UI_Score
   layers:
   - Default
   - TransparentFX

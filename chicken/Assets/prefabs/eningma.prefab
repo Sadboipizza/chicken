@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 3492333532247051918}
   m_Layer: 0
   m_Name: eningma
-  m_TagString: Enemy
+  m_TagString: Enemy2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,6 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFallowing: 1
   health: 100
+  maxE: 0
 --- !u!54 &4326356222041939475
 Rigidbody:
   m_ObjectHideFlags: 0

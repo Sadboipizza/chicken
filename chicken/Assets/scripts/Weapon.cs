@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Weapon : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class Weapon : MonoBehaviour
     public int ammo;
     public int maxAmmo;
     public int ammoRefill;
+    public int ammoRefillsLimit;
+
 
 
     void Start()
@@ -130,8 +133,16 @@ public class Weapon : MonoBehaviour
     {
         if(other.tag == "AmmoPack")
         {
-            ammo = 100;
-            Destroy(other.gameObject);
+            ammo = maxAmmo;
+            ammoRefillsLimit--;
+            if(ammoRefillsLimit <= 0)
+            {
+                other.gameObject.SetActive(false);
+            }
+                
+
+
+            
         }
         if (other.tag == "GameJournalist")
         {

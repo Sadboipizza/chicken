@@ -10,11 +10,13 @@ public class PlayerControler : MonoBehaviour
 
 {
 
-
+    
 
     GameObject WeaponSlot;
     Ray jumpRay;
 
+    public int healthRefillsmax;
+    
     public float jumpDistatnce = 1.1f;
     public float jumpHieght = 10f;
 
@@ -185,8 +187,13 @@ public class PlayerControler : MonoBehaviour
         if ((other.tag == "health") && (health < maxhealth))
         {
             health+=20;
+            healthRefillsmax--;
+            if(healthRefillsmax == 0)
+            {
+                other.gameObject.SetActive(false);
+            }
 
-            other.gameObject.SetActive(false);
+            
         }
         if (other.tag == "GameJournalist")
         {

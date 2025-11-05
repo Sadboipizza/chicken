@@ -13,7 +13,7 @@ public class BaEnemy : MonoBehaviour
     public int health = 5;
     Animator anim;
 
-    public int maxE = 10;
+  
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -37,16 +37,16 @@ public class BaEnemy : MonoBehaviour
         {
             agent.isStopped = false;
             agent.destination = GameObject.Find("Player").transform.position;
-            anim.SetBool("isattackuing", true);
+            anim.SetBool("is attackung", true);
         }
         else
         {
             agent.isStopped = true;
-            anim.SetBool("isattackung", false);
+            anim.SetBool("is attackung", false);
         }
 
 
-        
+       
 
 
     }
@@ -64,6 +64,10 @@ public class BaEnemy : MonoBehaviour
         {
             health -= 50;
 
+        }
+        if(other.tag == "Hazard")
+        {
+            health -= 5;
         }
 
     }
