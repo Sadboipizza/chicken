@@ -5,12 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Meny.unity
     guid: dc6127fb69772374eb6df01116ed45d8
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Grapple scenes/grapple.unity
+    guid: 4930998b458454446b47e98df804cbde
+  - enabled: 1
+    path: Assets/Scenes/Grapple scenes/Demo level.unity
+    guid: 3d639c0d8a5a3b346a9ee82dfa0c7fa5
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: a0f77c00b844e7a409e87bf060bfad50, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

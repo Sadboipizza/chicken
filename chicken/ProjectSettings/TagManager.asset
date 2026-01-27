@@ -24,6 +24,7 @@ TagManager:
   - Boolet2
   - WeaponSlot
   - UI_Score
+  - Kill
   layers:
   - Default
   - TransparentFX
@@ -35,7 +36,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - ground
   - 
   - 
   - 
@@ -60,6 +61,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: high
+    uniqueID: 841140921
     locked: 0
   m_RenderingLayers:
   - Default

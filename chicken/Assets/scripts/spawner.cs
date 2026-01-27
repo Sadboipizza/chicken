@@ -3,24 +3,30 @@ using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections.Generic;
+using System.Collections;
 
 public class spawner : MonoBehaviour
 {
 
-    private float spawnRangeX = 0;
-    private float spawnPosZ = 44.46f;
+    public Transform[] points;
     public GameObject[] enigmaPrefabs;
     public bool spawnEnemy = true;
     public int waveNumber = 1;
     TextMeshProUGUI score;
     public GameObject health;
     public GameObject refil;
-
-
+    
+    public listslinked.dalist enemiesList = new listslinked.dalist();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        foreach (GameObject enemy in enigmaPrefabs)
+        {
+            enemiesList.add(enemy.transform);
+        }
+
         SpawnEnemyWave(waveNumber);
         if (SceneManager.GetActiveScene().buildIndex >= 1)
         {
@@ -48,9 +54,16 @@ public class spawner : MonoBehaviour
     {
         for (int i = 0; i < enemiesToSpawn; i++)
         {
-            Vector3 spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, spawnPosZ);
-            int randomIndex = Random.Range(0, enigmaPrefabs.Length);
-            Instantiate(enigmaPrefabs[randomIndex], spawnPos, enigmaPrefabs[randomIndex].transform.rotation);
+            listslinked.node current = enemiesList.head;
+            while (current != null)
+            {
+                Transform enemyTransform = current.yes;
+                int randomPointIndex = Random.Range(0, points.Length);
+                Transform spawnPoint = points[randomPointIndex];
+                Instantiate(enemyTransform.gameObject, spawnPoint.position, spawnPoint.rotation);
+                current = current.after;
+            }
+
         }
 
     }
