@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     public int health  = 1;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,5 +33,5 @@ public class Player : MonoBehaviour
             health -= 10;
         }
     }
-    //Kill
+
 }

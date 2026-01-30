@@ -1,14 +1,16 @@
+using System.Collections;
 using UnityEngine;
 
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 public class movement : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Ray2D jumpy;
 
-    private float moveacc = 10f;
-    public float  upindownspeed = 5f;   
+    private float moveacc = 25f;
+    public float  upindownspeed = 1.5f;   
     public float jumpcool = 1f;
     public float jumpraydistance = 1.1f;
 
@@ -16,7 +18,9 @@ public class movement : MonoBehaviour
     private float verticaldirect;
     public bool allowedtojump = true;
     public PlayerInput input;
-    
+    private Vector2 rawmovement;
+    public mouseindi indi;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,34 +35,32 @@ public class movement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        horizontaldirect = GetInput().x;
+
         
         jumpy.origin = transform.position - (Vector3.down / 1.5f);
         jumpy.direction = -transform.up;
 
     }
 
-    private void FixedUpdate()
-    {
-        MoveCharacter();
-    }
 
-    private Vector2 GetInput()
+
+
+    public  void MoveCharacter(InputAction.CallbackContext value)
     {
-        return new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-    }
-    private void MoveCharacter()
-    {
-        rb.AddForce(new Vector2(horizontaldirect, 0f) * moveacc);
+        Vector2 movement = value.ReadValue<Vector2>();
+        rawmovement = new Vector2(movement.x, movement.y);
+        rb.linearVelocity = new Vector2(rawmovement.x * moveacc, (rb.linearVelocity.y / upindownspeed) );
 
     }
     public void Jump()
     {
-        if (Physics2D.Raycast(jumpy.origin , jumpy.direction  , 0.2f))
+       
+        if (Physics2D.Raycast(jumpy.origin , jumpy.direction  , 0.2f)&& allowedtojump )
         {
             rb.AddForce(Vector2.up * jumpraydistance, ForceMode2D.Impulse);
             allowedtojump = false; 
-
+            new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            StartCoroutine(ResetJump());
         }
         
            
@@ -66,4 +68,9 @@ public class movement : MonoBehaviour
         
     }
 
+    IEnumerator ResetJump()
+    {
+        yield return new WaitForSeconds(jumpcool);
+        allowedtojump = true;
+    }
 }

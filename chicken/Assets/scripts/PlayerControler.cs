@@ -9,17 +9,17 @@ using UnityEngine.SceneManagement;
 public class PlayerControler : MonoBehaviour
 
 {
+    [Header("Other")]
+    public waypoints waypoints;
+    public float threshold = 0.1f;
+    private Transform Currentpoint;
 
-    
-
+    [Header("the rest")]
     GameObject WeaponSlot;
     Ray jumpRay;
-
     public int healthRefillsmax;
-    
     public float jumpDistatnce = 1.1f;
     public float jumpHieght = 10f;
-
     Vector3 camereaOffset = new Vector3(0, 1, 0);
     private Rigidbody rb;
     float inputX;
@@ -28,10 +28,8 @@ public class PlayerControler : MonoBehaviour
     Camera playerCam;
     InputAction lookAxis;
     Vector2 cameraRotation = new Vector2(-10, 0);
-
     public int health = 100;
     public int maxhealth = 100;
-
     Ray interactRay;
     RaycastHit interactHit;
     GameObject pickUpObject;
@@ -40,14 +38,18 @@ public class PlayerControler : MonoBehaviour
     public Weapon currentWeapon;
     public float interactDistance = 3f;
     public bool attacking = false;
-
-
     public float cameraYMaxMin = 90;
     private RigidbodyConstraints constraints;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+       // Currentpoint = waypoints.GettingNextWaypoint(Currentpoint);
+       // transform.position = Currentpoint.position;
+       // Currentpoint = waypoints.GettingNextWaypoint(Currentpoint);
+        //transform.LookAt(Currentpoint.position);
+
         input = GetComponent<PlayerInput>();
         jumpRay = new Ray(transform.position, -transform.up);
         interactRay = new Ray(transform.position, transform.forward);
@@ -67,10 +69,19 @@ public class PlayerControler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (health <= 0)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+
+       // transform.position = Vector3.MoveTowards(transform.position, Currentpoint.position, speed * Time.deltaTime);
+        //if (Vector3.Distance(transform.position, Currentpoint.position) < threshold)
+        //{
+            //Currentpoint = waypoints.GettingNextWaypoint(Currentpoint);
+            //transform.LookAt(Currentpoint.position);
+        //}
+
+
+       // if (health <= 0)
+        //{
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //}
 
 
 
