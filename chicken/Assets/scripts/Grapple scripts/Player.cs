@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
+
+
     }
 
     // Update is called once per frame
